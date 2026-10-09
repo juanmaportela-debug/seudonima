@@ -10,7 +10,7 @@
 <meta property="og:type" content="article">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,400;1,6..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,400;1,6..72,600&family=Literata:ital,opsz,wght@0,7..72,450;0,7..72,700;1,7..72,450&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: página de nota de Seudónima — cabecera reducida, título de ensayo a gran escala, texto en estrofas a una columna angosta, cita destacada, cierre con difusión */
 :root{
@@ -20,6 +20,7 @@
   color-scheme:light;
   --display:"Newsreader","Iowan Old Style","Georgia",serif;
   --body:"Newsreader","Iowan Old Style","Georgia",serif;
+  --lectura:"Literata","Georgia",serif;
   --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
 }
 :root[data-modo="diario"]{--paper:#E6E1D3;--paper-2:#DCD6C5;--ink:#1D1C19;--ink-soft:#4F4C44;--rule:#B9B3A2;--on-accent:#F2EFE6;--grain-opacity:.55;--vineta:rgba(29,28,25,.09)}
@@ -64,10 +65,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 
 .texto{max-width:34rem;margin:0 auto;padding-block:clamp(28px,4vw,48px) 24px;border-top:1px solid var(--rule);display:grid;gap:1.6em}
 .texto p{margin:0}
+.texto .estrofa{font-family:var(--lectura);font-size:1.2rem;line-height:1.7;font-weight:450}
 .texto .estrofa:first-child::first-letter{float:left;font-family:var(--display);font-weight:800;font-size:4.6em;line-height:.8;padding:.06em .1em 0 0;color:var(--accent)}
 .corte{text-align:center;color:var(--ink-soft);letter-spacing:.8em;font-family:var(--mono);font-size:.9rem;padding-left:.8em}
 .destacada{margin:.4em -2rem;padding-block:1.1em;border-block:1.5px solid var(--ink);font-family:var(--display);font-style:italic;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.2;text-align:center;text-wrap:balance}
-.cierre{font-family:var(--display);font-weight:700;font-size:1.35rem;line-height:1.4}
+.texto .cierre{font-weight:700;font-size:1.25rem;line-height:1.6}
 
 .fin{max-width:34rem;margin:0 auto;padding-block:24px clamp(40px,6vw,72px);display:grid;gap:28px}
 .fin .marca{text-align:center;font-family:var(--display);font-weight:800;font-size:1.6rem;color:var(--accent)}
