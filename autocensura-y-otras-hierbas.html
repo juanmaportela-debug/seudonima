@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Autocensura y otras hierbas · Seudónima</title>
+<meta name="description" content="Un ensayo de Martín Cirio sobre la cancelación, la paciencia y el trabajo personal que nadie puede hacer por el otro.">
+<meta property="og:title" content="Autocensura y otras hierbas">
+<meta property="og:description" content="Un ensayo de Martín Cirio en Seudónima.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,400;1,6..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: página de nota de Seudónima — cabecera reducida, título de ensayo a gran escala, texto en estrofas a una columna angosta, cita destacada, cierre con difusión */
+:root{
+  --paper:#EADBB4; --paper-2:#E0CEA0; --ink:#3A2C1C; --ink-soft:#6B5A42; --rule:#C4AF82;
+  --accent:#2A3BC4; --on-accent:#F4EAD0;
+  --grain-opacity:.6; --grain-blend:multiply; --vineta:rgba(150,105,40,.18);
+  color-scheme:light;
+  --display:"Newsreader","Iowan Old Style","Georgia",serif;
+  --body:"Newsreader","Iowan Old Style","Georgia",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+:root[data-modo="diario"]{--paper:#E6E1D3;--paper-2:#DCD6C5;--ink:#1D1C19;--ink-soft:#4F4C44;--rule:#B9B3A2;--on-accent:#F2EFE6;--grain-opacity:.55;--vineta:rgba(29,28,25,.09)}
+:root[data-modo="noche"]{--paper:#1A1917;--paper-2:#22201D;--ink:#EAE5D8;--ink-soft:#ADA796;--rule:#3A3731;--accent:#8F9BFF;--on-accent:#111318;--grain-opacity:.35;--grain-blend:screen;--vineta:rgba(0,0,0,.35);color-scheme:dark}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:var(--grain-opacity);mix-blend-mode:var(--grain-blend);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .41  0 0 0 0 .33  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.012 .09' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .35  0 0 0 .35 0'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 50% 40%,transparent 50%,var(--vineta) 100%)}
+body>.wrap{position:relative;z-index:1}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.2rem;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background-color .3s}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:0}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+
+.modo-bar{display:flex;justify-content:flex-end;align-items:center;gap:10px;padding-block:10px 0;flex-wrap:wrap}
+.modo-sel{display:inline-flex;border:1.5px solid var(--ink)}
+.modo-sel button{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+.modo-sel button+button{border-left:1.5px solid var(--ink)}
+.modo-sel button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.modo-sel button:hover:not([aria-pressed="true"]){background:var(--paper-2)}
+
+.cabecera{display:flex;justify-content:space-between;align-items:baseline;gap:12px 24px;flex-wrap:wrap;padding-block:14px;border-bottom:3px solid var(--ink)}
+.cabecera .logo{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,4vw,2.4rem);letter-spacing:-.03em;line-height:1}
+.cabecera .logo span{color:var(--accent)}
+.cabecera nav{display:flex;gap:20px;flex-wrap:wrap}
+.cabecera nav a:hover{color:var(--accent)}
+
+.nota-head{max-width:900px;margin:0 auto;padding-block:clamp(40px,7vw,88px) clamp(28px,4vw,44px);text-align:center;display:grid;gap:22px;justify-items:center}
+.miga{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.miga .sec{color:var(--accent)}
+.nota-head h1{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(2.8rem,8.5vw,6.4rem);line-height:.95;letter-spacing:-.03em;text-wrap:balance;font-variation-settings:"opsz" 72}
+.nota-head h1 em{font-weight:400;font-style:italic;letter-spacing:-.02em}
+.autor{display:grid;gap:6px;justify-items:center}
+.autor .nombre{font-family:var(--display);font-size:1.35rem;font-weight:600}
+.autor .nombre::before{content:"Por ";font-weight:400;font-style:italic;color:var(--ink-soft)}
+.meta{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+
+.texto{max-width:34rem;margin:0 auto;padding-block:clamp(28px,4vw,48px) 24px;border-top:1px solid var(--rule);display:grid;gap:1.6em}
+.texto p{margin:0}
+.texto .estrofa:first-child::first-letter{float:left;font-family:var(--display);font-weight:800;font-size:4.6em;line-height:.8;padding:.06em .1em 0 0;color:var(--accent)}
+.corte{text-align:center;color:var(--ink-soft);letter-spacing:.8em;font-family:var(--mono);font-size:.9rem;padding-left:.8em}
+.destacada{margin:.4em -2rem;padding-block:1.1em;border-block:1.5px solid var(--ink);font-family:var(--display);font-style:italic;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.2;text-align:center;text-wrap:balance}
+.cierre{font-family:var(--display);font-weight:700;font-size:1.35rem;line-height:1.4}
+
+.fin{max-width:34rem;margin:0 auto;padding-block:24px clamp(40px,6vw,72px);display:grid;gap:28px}
+.fin .marca{text-align:center;font-family:var(--display);font-weight:800;font-size:1.6rem;color:var(--accent)}
+.compartir{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.btn{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border:1.5px solid var(--ink);font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;cursor:pointer;background:transparent;color:var(--ink);transition:background .15s,color .15s}
+.btn.primario{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+.sigue{border-top:3px solid var(--ink);padding-block:28px 48px;display:grid;gap:18px}
+.sigue-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px)}
+.sigue article{display:grid;gap:8px;align-content:start;min-width:0}
+.sigue h3{margin:0;font-family:var(--display);font-weight:700;font-size:1.35rem;line-height:1.15;text-wrap:balance}
+.sigue h3 a:hover{color:var(--accent)}
+.byline{font-family:var(--mono);font-size:.75rem;color:var(--ink-soft)}
+.aviso{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);text-align:center;padding-block:10px}
+
+@media (max-width:760px){
+  .destacada{margin-inline:0}
+  .compartir,.sigue-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="modo-bar">
+    <span class="label">Papel</span>
+    <div class="modo-sel" role="group" aria-label="Elegir papel">
+      <button type="button" data-modo="amarillo" aria-pressed="true">Amarillento</button>
+      <button type="button" data-modo="diario" aria-pressed="false">Diario</button>
+      <button type="button" data-modo="noche" aria-pressed="false">Noche</button>
+    </div>
+  </div>
+
+  <header class="cabecera">
+    <a class="logo" href="index.html">Seudónima<span>.</span></a>
+    <nav class="label" aria-label="Secciones">
+      <a href="index.html#encontrado">Encontrado</a>
+      <a href="index.html#firmas">Firmas</a>
+      <a href="index.html#rescate">Rescate</a>
+    </nav>
+  </header>
+
+  <article>
+    <div class="nota-head">
+      <div class="miga label"><span class="sec">Firmas</span><span>·</span><span>Ensayo</span></div>
+      <h1>Autocensura <em>y otras hierbas</em></h1>
+      <div class="autor">
+        <span class="nombre">Martín Cirio</span>
+        <div class="meta label"><span>9 de octubre de 2026</span><span>·</span><span>3 min de lectura</span></div>
+      </div>
+    </div>
+
+    <div class="texto">
+      <p class="estrofa">La concha de nuestra madre.<br>
+      ¿Cómo podemos ser tan idiotas?<br>
+      ¿Cómo es que no nos damos cuenta?<br>
+      ¿Por qué dejamos envenenarnos?</p>
+
+      <p class="estrofa">No quiero echarnos la culpa.<br>
+      Porque es parte del asunto.<br>
+      Pero hay algo ahí que me hace ruido.<br>
+      Porque el individualismo está demonizado<br>
+      con bases empíricas.</p>
+
+      <p class="estrofa">Nadie se salva solo es una frase motivadora.<br>
+      Necesaria para recordar que hay cosas que solo<br>
+      se pueden lograr juntos.</p>
+
+      <p class="estrofa">No quiero decir <em>pero</em> de nuevo.<br>
+      Aun así…</p>
+
+      <p class="estrofa">Hay un trabajo personal que nadie puede hacer por el otro.<br>
+      Mejor si hay un contexto y una sociedad que acompañe.</p>
+
+      <p class="estrofa">Por ahí no tenés que “salvarte”<br>
+      ni “arreglarte”.</p>
+
+      <p class="estrofa">Pero sos vos quien se cuida, se alimenta.<br>
+      Te vestís vos, te bañás vos, te entrenás vos,<br>
+      te intoxicás vos, te embellecés y te dejás estar.</p>
+
+      <p class="estrofa">Ahora, si nadie lo hace, ¿para qué me voy a meter a cambiar esos hábitos? ¿Esas nuevas adicciones?<br>
+      ¿Adicción será?<br>
+      ¿Químico?<br>
+      ¿Psicológico?</p>
+
+      <p class="estrofa">¿El apuro es el problema?<br>
+      ¿La insatisfacción?<br>
+      ¿Será que en realidad pensamos que todos saben lo mismo?</p>
+
+      <p class="estrofa">¿Soberbia? ¿Falsa modestia? ¿No quedar pedante?</p>
+
+      <div class="corte" aria-hidden="true">***</div>
+
+      <p class="estrofa">Cancelado, autocensura.<br>
+      Fue necesario, no había límites.</p>
+
+      <p class="estrofa">Hay cosas que no se dicen más.<br>
+      Porque realmente no tienen sentido.<br>
+      Hay chistes que ya no causan gracia y creo que nunca fueron muy graciosos.</p>
+
+      <p class="estrofa">Igual que con las drogas, la prohibición lleva a lo clandestino.<br>
+      En la venta y en el consumo.<br>
+      Te escondés para drogarte.</p>
+
+      <p class="estrofa">Igual no es ejemplo de lo que quiero decir.<br>
+      Hay que recuperar la paciencia. Pero no para ser un buda.<br>
+      Porque en la lentitud, en la espera, en el aburrimiento<br>
+      quizás recuperemos ese sabor que sentimos perdido.</p>
+
+      <p class="destacada">Por ahí cambia el filtro y los colores vuelven.</p>
+
+      <p class="estrofa">No hace falta volver al blanco y negro.<br>
+      Ni al sepia.</p>
+
+      <p class="estrofa cierre">Sí podríamos volver a tocar un papel.<br>
+      Puede que ya no lo hagamos de los árboles.<br>
+      Plantemos cáñamo.<br>
+      Volvamos a la tierra.<br>
+      Volemos con la tecnología nueva.<br>
+      Antes de que nos vuele a nosotros.</p>
+    </div>
+
+    <div class="fin">
+      <div class="marca" aria-hidden="true">■</div>
+      <div class="compartir">
+        <a class="btn primario" id="wa" href="#" target="_blank" rel="noopener">Compartir por WhatsApp <span>→</span></a>
+        <button class="btn" type="button" id="copiar">Copiar link <span id="copiar-estado">↗</span></button>
+      </div>
+    </div>
+  </article>
+
+  <section class="sigue" aria-label="Seguí leyendo">
+    <span class="label">Seguí leyendo en Firmas</span>
+    <div class="sigue-grid">
+      <article>
+        <h3><a href="#">¿Sigue teniendo sentido leer en papel cuando todo cabe en una pantalla?</a></h3>
+        <div class="byline">Por Julián Ocampo · Opinión</div>
+      </article>
+      <article>
+        <h3><a href="#">¿Quién decide qué libros llegan a la mesa de novedades?</a></h3>
+        <div class="byline">Por Ana Belgrano · Investigación</div>
+      </article>
+      <article>
+        <h3><a href="#">¿Por qué escribimos con seudónimo cuando todos nos pueden encontrar?</a></h3>
+        <div class="byline">Por R. Vidal · Opinión</div>
+      </article>
+    </div>
+    <div class="aviso">Prototipo · las notas relacionadas son de ejemplo</div>
+  </section>
+</div>
+
+<script>
+(function(){
+  function aplicar(modo){
+    if (modo === 'diario' || modo === 'noche') document.documentElement.setAttribute('data-modo', modo);
+    else document.documentElement.removeAttribute('data-modo');
+    document.querySelectorAll('.modo-sel button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.modo === modo)); });
+  }
+  var m = 'amarillo'; try { m = localStorage.getItem('seudonima-modo') || 'amarillo'; } catch(e){}
+  aplicar(m);
+  document.querySelectorAll('.modo-sel button').forEach(function(b){ b.addEventListener('click', function(){
+    aplicar(b.dataset.modo); try { localStorage.setItem('seudonima-modo', b.dataset.modo); } catch(e){}
+  }); });
+  document.getElementById('copiar').addEventListener('click', function(){
+    var est = document.getElementById('copiar-estado');
+    navigator.clipboard.writeText(location.href)
+      .then(function(){ est.textContent = 'Copiado'; }).catch(function(){ est.textContent = location.href; });
+  });
+  var wa=document.getElementById('wa'); if(wa) wa.href='https://wa.me/?text='+encodeURIComponent('Autocensura y otras hierbas, por Martín Cirio — '+location.href);
+})();
+</script>
+</body>
+</html>

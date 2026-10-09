@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Seudónima</title>
+<meta name="description" content="Un refugio digital para evadir el sesgo algorítmico.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,400;1,6..72,600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+/* Layout: portada de revista cultural — cabecera tipográfica, pregunta de tapa, tres secciones con criterio curatorial, aviso de canal al pie */
+:root{
+  --paper:#EADBB4;
+  --paper-2:#E0CEA0;
+  --ink:#3A2C1C;
+  --ink-soft:#6B5A42;
+  --rule:#C4AF82;
+  --accent:#2A3BC4;
+  --on-accent:#F4EAD0;
+  --grain-opacity:.6;
+  --grain-blend:multiply;
+  --vineta:rgba(150,105,40,.18);
+  color-scheme:light;
+  --display:"Newsreader", "Iowan Old Style", "Georgia", serif;
+  --body:"Newsreader", "Iowan Old Style", "Georgia", serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+:root[data-modo="diario"]{
+  --paper:#E6E1D3; --paper-2:#DCD6C5; --ink:#1D1C19; --ink-soft:#4F4C44;
+  --rule:#B9B3A2; --on-accent:#F2EFE6; --grain-opacity:.55; --vineta:rgba(29,28,25,.09);
+}
+:root[data-modo="noche"]{
+  --paper:#1A1917; --paper-2:#22201D; --ink:#EAE5D8; --ink-soft:#ADA796;
+  --rule:#3A3731; --accent:#8F9BFF; --on-accent:#111318; --grain-opacity:.35;
+  --grain-blend:screen; --vineta:rgba(0,0,0,.35); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+body,body::after{transition:background-color .3s}
+.modo-bar{display:flex;justify-content:flex-end;align-items:center;gap:10px;padding-block:10px 0;flex-wrap:wrap}
+.modo-sel{display:inline-flex;border:1.5px solid var(--ink)}
+.modo-sel button{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+.modo-sel button+button{border-left:1.5px solid var(--ink)}
+.modo-sel button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.modo-sel button:hover:not([aria-pressed="true"]){background:var(--paper-2)}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  opacity:var(--grain-opacity);mix-blend-mode:var(--grain-blend);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .41  0 0 0 0 .33  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.012 .09' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .35  0 0 0 .35 0'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 50% 40%, transparent 50%, var(--vineta) 100%);
+}
+body > .wrap{position:relative;z-index:1}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.125rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:0}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-block:14px;border-bottom:1px solid var(--rule)}
+.topbar nav{display:flex;gap:20px;flex-wrap:wrap}
+.topbar nav a:hover{color:var(--accent)}
+.masthead{padding-block:clamp(28px,6vw,64px) clamp(20px,4vw,36px);display:grid;gap:14px;border-bottom:3px solid var(--ink)}
+.masthead h1{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(3.4rem,13vw,9.5rem);line-height:.88;letter-spacing:-.035em;font-variation-settings:"opsz" 72}
+.masthead h1 .acc{color:var(--accent)}
+.tagline{display:flex;justify-content:space-between;align-items:baseline;gap:12px 32px;flex-wrap:wrap}
+.tagline p{margin:0;font-style:italic;font-size:clamp(1.1rem,2.2vw,1.4rem);color:var(--ink-soft);max-width:36ch}
+.tapa{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);padding-block:clamp(32px,5vw,56px);border-bottom:1px solid var(--rule)}
+.tapa h2{margin:12px 0 18px;font-family:var(--display);font-weight:700;font-size:clamp(2.6rem,6.4vw,5.2rem);line-height:1;letter-spacing:-.015em;text-wrap:balance;font-variation-settings:"opsz" 60}
+.tapa h2 a:hover{color:var(--accent)}
+.tapa h2 em{font-weight:400;font-style:italic}
+.tapa .bajada{font-size:1.2rem;color:var(--ink-soft);max-width:58ch;margin:0 0 18px}
+.byline{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft)}
+.byline b{color:var(--ink);font-weight:500}
+.lateral{display:grid;gap:0;align-content:start;border-top:1px solid var(--ink)}
+.lateral article{padding-block:18px;border-bottom:1px solid var(--rule)}
+.lateral h3{margin:8px 0 8px;font-family:var(--display);font-weight:700;font-size:1.45rem;line-height:1.15;text-wrap:balance}
+.lateral h3 a:hover{color:var(--accent)}
+.seccion{padding-block:clamp(32px,5vw,56px);border-bottom:1px solid var(--rule)}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px 24px;flex-wrap:wrap;margin-bottom:24px}
+.sec-head h2{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(2rem,4vw,2.8rem);letter-spacing:-.02em}
+.sec-head p{margin:0;font-style:italic;color:var(--ink-soft);max-width:48ch}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px)}
+.pieza{display:grid;gap:10px;align-content:start;min-width:0}
+.pieza h3{margin:0;font-family:var(--display);font-weight:700;font-size:1.5rem;line-height:1.15;text-wrap:balance}
+.pieza h3 a:hover{color:var(--accent)}
+.pieza p{margin:0;color:var(--ink-soft);font-size:1.05rem}
+.fuente{font-family:var(--mono);font-size:.75rem;color:var(--ink-soft);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fuente .ext{color:var(--accent)}
+.nota-cur{border-left:2px solid var(--accent);padding-left:12px;font-style:italic;color:var(--ink)!important}
+.firmas .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+.firma{padding:clamp(20px,3vw,36px);display:grid;gap:14px;align-content:space-between;min-width:0;border-bottom:1px solid var(--rule)}
+.firma:nth-child(odd){border-right:1px solid var(--rule)}
+.firma h3{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,2.6vw,2.05rem);line-height:1.14;text-wrap:balance;text-align:center}
+.firma h3 a:hover{color:var(--accent)}
+.firma .byline{text-align:center}
+.rescate{background:color-mix(in srgb, var(--paper-2) 80%, transparent)}
+.rescate .inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(24px,4vw,56px);align-items:start}
+.rescate blockquote{margin:0;font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.25;text-wrap:balance}
+.rescate .ficha{display:grid;gap:12px}
+.rescate .ficha h3{margin:0;font-family:var(--display);font-weight:700;font-size:1.7rem;line-height:1.15}
+.rescate .ficha p{margin:0;color:var(--ink-soft)}
+.datos{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-family:var(--mono);font-size:.78rem;margin:4px 0 0}
+.datos dt{color:var(--ink-soft)}
+.datos dd{margin:0}
+.canal{padding-block:clamp(36px,6vw,64px);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;align-items:center}
+.canal h2{margin:0 0 10px;font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.6vw,2.6rem);line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+.canal p{margin:0;color:var(--ink-soft);max-width:52ch}
+.acciones{display:grid;gap:12px}
+.btn{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px;border:1.5px solid var(--ink);font-family:var(--mono);font-size:.85rem;letter-spacing:.04em;cursor:pointer;background:transparent;color:var(--ink);transition:background .15s,color .15s}
+.btn.primario{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn small{opacity:.75}
+footer{border-top:3px solid var(--ink);padding-block:20px 40px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer .logo{font-family:var(--display);font-weight:800;font-size:1.4rem;letter-spacing:-.02em}
+.aviso{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);text-align:center;padding-block:12px;border-bottom:1px dashed var(--rule)}
+@media (max-width:860px){
+  .tapa,.rescate .inner,.canal{grid-template-columns:minmax(0,1fr)}
+  .grid3{grid-template-columns:minmax(0,1fr)}
+  .grid3 .pieza+.pieza{border-top:1px solid var(--rule);padding-top:20px}
+}
+@media (max-width:640px){
+  .firmas .grid2{grid-template-columns:minmax(0,1fr)}
+  .firma:nth-child(odd){border-right:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="modo-bar">
+    <span class="label">Papel</span>
+    <div class="modo-sel" role="group" aria-label="Elegir papel">
+      <button type="button" data-modo="amarillo" aria-pressed="true">Amarillento</button>
+      <button type="button" data-modo="diario" aria-pressed="false">Diario</button>
+      <button type="button" data-modo="noche" aria-pressed="false">Noche</button>
+    </div>
+  </div>
+  <div class="aviso">Prototipo · textos, firmas y fuentes de ejemplo</div>
+
+  <div class="topbar">
+    <span class="label">Viernes 9 de octubre de 2026 · Edición 01</span>
+    <nav class="label" aria-label="Secciones">
+      <a href="#encontrado">Encontrado</a>
+      <a href="#firmas">Firmas</a>
+      <a href="#rescate">Rescate</a>
+      <a href="#canal">Recibir</a>
+    </nav>
+  </div>
+
+  <header class="masthead">
+    <h1>Seudónima<span class="acc">.</span></h1>
+    <div class="tagline">
+      <p>Un refugio digital para evadir el sesgo algorítmico.</p>
+      <span class="label">Cultura · PALABRAS · HUMANOS</span>
+    </div>
+  </header>
+
+  <section class="tapa" aria-label="Nota de tapa">
+    <article>
+      <span class="label">Firmas · Ensayo · Tapa</span>
+      <h2><a href="autocensura-y-otras-hierbas.html">Autocensura <em>y otras hierbas</em></a></h2>
+      <p class="bajada">Un ensayo sobre la cancelación, la paciencia y el trabajo personal que nadie puede hacer por el otro.</p>
+      <div class="byline">Por <b>Martín Cirio</b> · 3 min de lectura</div>
+    </article>
+    <aside class="lateral" aria-label="También en esta edición">
+      <article>
+        <span class="label">Opinión</span>
+        <h3><a href="#">En un mundo donde la IA crea a velocidad sobrehumana, ¿cuál será el valor diferencial del ser humano?</a></h3>
+        <div class="byline">Por <b>Lucía Ferrán</b> · 9 min</div>
+      </article>
+      <article>
+        <span class="label">Ensayo</span>
+        <h3><a href="#">¿Creés que el concepto de "nación" está quedando obsoleto frente a las redes de confianza basadas en código?</a></h3>
+        <div class="byline">Por <b>Tomás Aldao</b> · 12 min</div>
+      </article>
+      <article>
+        <span class="label">Crónica</span>
+        <h3><a href="#">La última librería de viejo de Avenida de Mayo cierra a las siete</a></h3>
+        <div class="byline">Por <b>Mara Quiroga</b> · 6 min</div>
+      </article>
+    </aside>
+  </section>
+
+  <section class="seccion" id="encontrado">
+    <div class="sec-head">
+      <h2>Encontrado</h2>
+      <p>Lo que leímos en otros medios y vale la pena. Cada link, con una línea de por qué.</p>
+    </div>
+    <div class="grid3">
+      <article class="pieza">
+        <div class="fuente"><span class="ext">↗</span> Revista Ñ · Literatura</div>
+        <h3><a href="#">Las traductoras que reescriben a los clásicos rusos</a></h3>
+        <p class="nota-cur">Lo elegimos porque explica mejor que nadie por qué cada traducción es una lectura distinta.</p>
+      </article>
+      <article class="pieza">
+        <div class="fuente"><span class="ext">↗</span> Anfibia · Cultura</div>
+        <h3><a href="#">El fanzine volvió, y esta vez no quiere viralizarse</a></h3>
+        <p class="nota-cur">Una tribu entera haciendo lo mismo que este portal: publicar para pocos y a propósito.</p>
+      </article>
+      <article class="pieza">
+        <div class="fuente"><span class="ext">↗</span> Eterna Cadencia · Entrevista</div>
+        <h3><a href="#">"Escribo para el lector que todavía no existe"</a></h3>
+        <p class="nota-cur">Diez minutos de lectura que cambian cómo mirás tu biblioteca.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="seccion firmas" id="firmas">
+    <div class="sec-head">
+      <h2>Firmas</h2>
+      <p>Notas originales de periodistas y escritores que confían en este refugio.</p>
+    </div>
+    <div class="grid2">
+      <article class="firma">
+        <h3><a href="#">¿Sigue teniendo sentido leer en papel cuando todo cabe en una pantalla?</a></h3>
+        <div class="byline">Por <b>Julián Ocampo</b> · Opinión</div>
+      </article>
+      <article class="firma">
+        <h3><a href="#">¿Quién decide qué libros llegan a la mesa de novedades?</a></h3>
+        <div class="byline">Por <b>Ana Belgrano</b> · Investigación</div>
+      </article>
+      <article class="firma">
+        <h3><a href="#">¿Puede una canción de cumbia ser leída como un poema?</a></h3>
+        <div class="byline">Por <b>Nicolás Paz</b> · Ensayo</div>
+      </article>
+      <article class="firma">
+        <h3><a href="#">¿Por qué escribimos con seudónimo cuando todos nos pueden encontrar?</a></h3>
+        <div class="byline">Por <b>R. Vidal</b> · Opinión</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="seccion rescate" id="rescate" style="margin-inline:calc(-1 * clamp(16px,4vw,40px));padding-inline:clamp(16px,4vw,40px)">
+    <div class="sec-head">
+      <h2>Rescate</h2>
+      <p>Un texto viejo, olvidado o fuera de agenda. Lo que el feed nunca te iba a mostrar.</p>
+    </div>
+    <div class="inner">
+      <blockquote>"Toda lectura es un refugio provisorio: uno entra, se seca la lluvia y vuelve a salir distinto."</blockquote>
+      <div class="ficha">
+        <span class="label">Ensayo recuperado</span>
+        <h3><a href="#">Elogio de la biblioteca ajena</a></h3>
+        <p>Un texto breve sobre leer los libros subrayados por otros. Lo rescatamos de una revista literaria de provincia que dejó de salir hace décadas.</p>
+        <dl class="datos">
+          <dt>Publicado</dt><dd>1987</dd>
+          <dt>Extensión</dt><dd>2.400 palabras</dd>
+          <dt>Por qué hoy</dt><dd>Porque nadie lo está recomendando</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="canal" id="canal">
+    <div>
+      <span class="label">Sin algoritmo de por medio</span>
+      <h2>Cada nota nueva, avisada por WhatsApp.</h2>
+      <p>Un mensaje por publicación, en orden y sin filtros. Si preferís un lector de noticias, también tenemos RSS.</p>
+    </div>
+    <div class="acciones">
+      <a class="btn primario" href="#"><span>Seguir el canal de WhatsApp</span> <small>→</small></a>
+      <button class="btn" type="button" id="copiar-rss" data-feed="https://seudonima.com.ar/feed.xml"><span>Copiar feed RSS</span> <small id="rss-estado">/feed.xml</small></button>
+    </div>
+  </section>
+
+  <footer>
+    <span class="logo">Seudónima.</span>
+    <span class="label">Curaduría humana · Buenos Aires</span>
+  </footer>
+</div>
+
+<script id="sitio-script">
+(function(){
+  var modoActual = 'amarillo';
+  function aplicar(modo){
+    modoActual = modo;
+    if (modo === 'diario' || modo === 'noche') document.documentElement.setAttribute('data-modo', modo);
+    else document.documentElement.removeAttribute('data-modo');
+    document.querySelectorAll('.modo-sel button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.modo === modo)); });
+  }
+  try { modoActual = localStorage.getItem('seudonima-modo') || 'amarillo'; } catch(e){}
+  aplicar(modoActual);
+  window.seudonimaModo = function(){ aplicar(modoActual); };
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('.modo-sel button');
+    if (b){
+      aplicar(b.dataset.modo);
+      try { localStorage.setItem('seudonima-modo', b.dataset.modo); } catch(err){}
+      return;
+    }
+    var rss = e.target.closest('#copiar-rss');
+    if (rss && !document.body.classList.contains('editando')){
+      var estado = document.getElementById('rss-estado');
+      navigator.clipboard.writeText(rss.dataset.feed).then(function(){ estado.textContent = 'Copiado'; })
+        .catch(function(){ estado.textContent = rss.dataset.feed; });
+    }
+  });
+})();
+</script>
+</body>
+</html>
